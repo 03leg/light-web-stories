@@ -1,0 +1,154 @@
+.story-button {
+    position: relative;
+    width: 124px;
+    height: 220px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+}
+
+.story-image {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.navigation-button {
+    width: 32px;
+    height: 32px;
+    background: #fff;
+    border: 1px solid rgba(146, 156, 165, 0.4);
+    border-radius: 20px;
+    color: #929ca5;
+}
+
+.navigation-next-button {
+    transform: rotate(180deg);
+}
+
+.navigation-button-svg-content {
+    fill: currentColor;
+    overflow: hidden;
+    stroke: inherit;
+}
+
+.no-user-select {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    content: "";
+}
+
+.stories-viewer {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1500;
+    display: flex;
+    align-items: center;
+}
+
+.stories-viewer__background {
+    position: absolute;
+    background: #000;
+    opacity: 0.7;
+    height: 100%;
+    width: 100%;
+}
+
+.stories-viewer__container {
+    display: grid;
+    grid-gap: 70px;
+    grid-auto-flow: column;
+    position: relative;
+    transition: 0.2s;
+}
+
+.story-view {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    /* height: 100%; */
+    width: 100%;
+}
+
+.story-view__overlap:hover {
+    background-color: transparent;
+}
+
+.story-view__overlap {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+}
+
+.story-view__content {
+    /* border-radius: 8px; */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+
+    /* height: 100%; */
+    width: 100%;
+    position: relative;
+    justify-content: center;
+}
+
+.story-view__image {
+    width: 417px;
+    height: 740px;
+    max-height: 100vh;
+    max-width: 56.3vh;
+    object-fit: cover;
+    background: #e8e8e8;
+}
+
+.story-view__image_hidden {
+    width: 0;
+}
+
+.story-view__navigation-area {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    opacity: 0.3;
+    cursor: pointer;
+}
+
+.story-view__navigation-area:hover {
+    background: linear-gradient(90deg, transparent 33.33%, #000);
+}
+
+.story-view__navigation-area_prev {
+    left: 0;
+    transform: rotate(180deg);
+}
+
+.story-view__navigation-area_next {
+    right: 0;
+}
+
+
+.stories-viewer .swiper-slide {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
