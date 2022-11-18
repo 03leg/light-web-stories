@@ -65,16 +65,32 @@ export class StoriesViewer {
   private getStories(): Array<StoryView> {
     const result = [];
 
+    let index = 0;
+
     for (const storyOptions of this._generalOptions.items) {
       const instance = new StoryView({
         onNextStory: this.showNextStory.bind(this),
         onPrevStory: this.showPrevStory.bind(this),
         storyOptions: storyOptions,
+        isFirstStory: index === 0,
+        isLastStory: index + 1 === this._generalOptions.items.length,
+        onChangeStory: this.changeStory.bind(this),
       });
       result.push(instance);
+      index++;
     }
 
     return result;
+  }
+
+  private changeStory(storyView: StoryView): void {
+    this._stories[this._visibleStoryIndex].hide();
+
+    this._visibleStoryIndex = this._stories.indexOf(storyView);
+
+    this._stories[this._visibleStoryIndex].show();
+    
+    this.updateViewportPosition();
   }
 
   private showNextStory(): void {

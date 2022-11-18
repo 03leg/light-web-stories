@@ -146,6 +146,39 @@
     right: 0;
 }
 
+.story-view__navigate-story-button {
+    position: absolute;
+    top: calc(50% - 20px);
+    width: 40px;
+    height: 40px;
+    background: #444;
+    border: 1px solid rgba(146, 156, 165, 0.4);
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #fff;
+}
+
+.story-view__navigate-story-button_disabled {
+    opacity: 0.2;
+    cursor: initial;
+    pointer-events: none;
+}
+
+.story-view__navigate-story-button:hover {
+    opacity: 0.8;
+}
+
+.story-view__navigate-story-button_prev {
+    left: -48px;
+}
+
+.story-view__navigate-story-button_next {
+    right: -48px;
+    transform: rotate(180deg);
+}
 
 .stories-viewer .swiper-slide {
     height: 100vh;

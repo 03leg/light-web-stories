@@ -17,6 +17,11 @@ export class StoryView {
   private _storyContentElement: HTMLDivElement =
     StoryViewHtmlHelper.getStoryContentElement();
 
+  private _showPrevImageButtonElement =
+    StoryViewHtmlHelper.getPrevImageButtonElement();
+  private _showNextImageButtonElement =
+    StoryViewHtmlHelper.getNextImageButtonElement();
+
   public get element(): HTMLDivElement {
     if (this._element === null) {
       this._element = this.createElement();
@@ -31,24 +36,82 @@ export class StoryView {
   constructor(private _options: StoryViewOptions) {
     this.showNextImage = this.showNextImage.bind(this);
     this.showPrevImage = this.showPrevImage.bind(this);
+    this.changeStory = this.changeStory.bind(this);
 
     this._prevAreaElement.addEventListener("click", this.showPrevImage);
     this._nextAreaElement.addEventListener("click", this.showNextImage);
+
+    this._showNextImageButtonElement.addEventListener(
+      "click",
+      this.showNextImage
+    );
+    this._showPrevImageButtonElement.addEventListener(
+      "click",
+      this.showPrevImage
+    );
+
+    this._overlapElement.addEventListener("click", this.changeStory);
+  }
+
+  private changeStory(): void {
+    this._options.onChangeStory(this);
   }
 
   show() {
     this.showNavigationAreas();
+    this.showNavigationImageButtons();
+
     this._overlapElement.remove();
   }
 
   hide() {
     this.removeNavigationAreas();
+    this.removeNavigationStoryButtons();
+
     this._storyContentElement.appendChild(this._overlapElement);
+  }
+
+  protected showNavigationImageButtons(): void {
+    this.element.appendChild(this._showNextImageButtonElement);
+    this.element.appendChild(this._showPrevImageButtonElement);
+
+    this.updateNavigationButtonsState();
+  }
+
+  protected updateNavigationButtonsState(): void {
+    console.log("update");
+
+    this._showPrevImageButtonElement.classList.remove(
+      "story-view__navigate-story-button_disabled"
+    );
+    this._showNextImageButtonElement.classList.remove(
+      "story-view__navigate-story-button_disabled"
+    );
+
+    if (
+      this._options.isLastStory === true &&
+      this._visibleImageIndex + 1 >= this.storyItemsCount
+    ) {
+      this._showNextImageButtonElement.classList.add(
+        "story-view__navigate-story-button_disabled"
+      );
+    }
+
+    if (this._options.isFirstStory === true && this._visibleImageIndex === 0) {
+      this._showPrevImageButtonElement.classList.add(
+        "story-view__navigate-story-button_disabled"
+      );
+    }
+  }
+
+  protected removeNavigationStoryButtons(): void {
+    this._showNextImageButtonElement.remove();
+    this._showPrevImageButtonElement.remove();
   }
 
   showNavigationAreas() {
     this.element.appendChild(this._prevAreaElement);
-    this.element.appendChild(this._nextAreaElement); 
+    this.element.appendChild(this._nextAreaElement);
   }
 
   removeNavigationAreas(): void {
@@ -69,6 +132,7 @@ export class StoryView {
   showNextImage() {
     if (this._visibleImageIndex + 1 >= this.storyItemsCount) {
       this._options.onNextStory();
+      this.updateNavigationButtonsState();
       return;
     }
 
@@ -81,11 +145,14 @@ export class StoryView {
     this.getImageElementFromMapByIndex(
       this._visibleImageIndex
     ).classList.remove("story-view__image_hidden");
+
+    this.updateNavigationButtonsState();
   }
 
   showPrevImage() {
     if (this._visibleImageIndex === 0) {
       this._options.onPrevStory();
+      this.updateNavigationButtonsState();
       return;
     }
 
@@ -98,6 +165,8 @@ export class StoryView {
     this.getImageElementFromMapByIndex(
       this._visibleImageIndex
     ).classList.remove("story-view__image_hidden");
+
+    this.updateNavigationButtonsState();
   }
 
   private createElement(): HTMLDivElement {
@@ -124,6 +193,7 @@ export class StoryView {
   private getStoryImage(story: Story, index: number): HTMLImageElement {
     const image = document.createElement("img");
     image.classList.add("story-view__image");
+    image.classList.add("no-user-select");
 
     if (index !== this._visibleImageIndex) {
       image.classList.add("story-view__image_hidden");
@@ -137,5 +207,16 @@ export class StoryView {
   public destroy(): void {
     this._prevAreaElement.removeEventListener("click", this.showPrevImage);
     this._nextAreaElement.removeEventListener("click", this.showNextImage);
+
+    this._showNextImageButtonElement.removeEventListener(
+      "click",
+      this.showNextImage
+    );
+    this._showPrevImageButtonElement.removeEventListener(
+      "click",
+      this.showPrevImage
+    );
+
+    this._overlapElement.removeEventListener("click", this.changeStory);
   }
 }
