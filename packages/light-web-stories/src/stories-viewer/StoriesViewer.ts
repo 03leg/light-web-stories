@@ -3,32 +3,34 @@ import { ImageStoryPreview } from "../ImageStoryPreview";
 import { StoryView } from "./StoryView";
 
 export class StoriesViewer {
-  private _isInitialized = false;
-  protected _storiesContainerElement: HTMLDivElement;
-  private _storiesViewerElement: HTMLDivElement;
-  protected _stories: StoryView[];
+  protected _storiesContainerElement!: HTMLDivElement;
+  private _storiesViewerElement!: HTMLDivElement;
+  private _closeButton!: HTMLDivElement;
+  protected _stories!: StoryView[];
+
   private _visibleStoryIndex: number = 0;
 
   public constructor(
     private _container: HTMLElement,
     private _generalOptions: LightWebStoriesOptions
   ) {
+    this.onCloseStoriesViewer = this.onCloseStoriesViewer.bind(this);
+  }
+
+  private createElements(): void {
     this._stories = this.getStories();
 
     const rootElements = StoriesViewer.createMainElements();
 
     this._storiesContainerElement = rootElements.storiesContainerElement;
     this._storiesViewerElement = rootElements.storiesViewerElement;
+    this._closeButton = rootElements.closeButton;
+
+    this._closeButton.addEventListener("click", this.onCloseStoriesViewer);
   }
 
-  protected initialize(): void {
-    this._container.appendChild(this._storiesViewerElement);
-
-    this.addStoryElements();
-
-    this._stories[this._visibleStoryIndex].show();
-
-    this.updateViewportPosition();
+  private onCloseStoriesViewer(): void {
+    this.close();
   }
 
   protected addStoryElements(): void {
@@ -40,6 +42,7 @@ export class StoriesViewer {
   private static createMainElements(): {
     storiesViewerElement: HTMLDivElement;
     storiesContainerElement: HTMLDivElement;
+    closeButton: HTMLDivElement;
   } {
     const storiesViewerElement = document.createElement("div");
     storiesViewerElement.classList.add("stories-viewer");
@@ -50,16 +53,62 @@ export class StoriesViewer {
     const storiesContainerElement = document.createElement("div");
     storiesContainerElement.classList.add("stories-viewer__container");
 
+    const closeButton = StoriesViewer.createCloseButton();
+
+    storiesViewerElement.appendChild(closeButton);
     storiesViewerElement.appendChild(backgroundElement);
     storiesViewerElement.appendChild(storiesContainerElement);
 
-    return { storiesViewerElement, storiesContainerElement };
+    return { storiesViewerElement, storiesContainerElement, closeButton };
+  }
+
+  private static createCloseButton(): HTMLDivElement {
+    const element = document.createElement("div");
+    element.classList.add("stories-viewer__close-button");
+
+    var closeSvg = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "svg"
+    );
+    closeSvg.setAttribute("height", "100%");
+    closeSvg.setAttribute("width", "100%");
+    closeSvg.setAttribute("viewBox", "0 0 12 12");
+
+    closeSvg.innerHTML =
+      '<polygon xmlns="http://www.w3.org/2000/svg" points="7.6 6 12 10.4 10.4 12 6 7.6 1.6 12 0 10.4 4.4 6 0 1.6 1.6 0 6 4.4 10.4 0 12 1.6"/>';
+    element.appendChild(closeSvg);
+
+    return element;
+  }
+
+  private setVisibleStoryIndex(storySlide: ImageStoryPreview): void {
+    const userStory = this._stories.find(
+      (p) => p.storyOptions === storySlide.options
+    );
+
+    if (userStory === undefined) {
+      throw new Error("InvalidOperationError");
+    }
+
+    this._visibleStoryIndex = this._stories.indexOf(userStory);
   }
 
   public show(storySlide: ImageStoryPreview) {
-    if (!this._isInitialized) {
-      this.initialize();
-    }
+    this.createElements();
+
+    this.addStoryElements();
+    this.setVisibleStoryIndex(storySlide);
+
+    this._stories[this._visibleStoryIndex].show();
+
+    this._container.appendChild(this._storiesViewerElement);
+
+    this.updateViewportPosition();
+  }
+
+  public close(): void {
+    this._storiesViewerElement.remove();
+    this.destroy();
   }
 
   private getStories(): Array<StoryView> {
@@ -89,7 +138,7 @@ export class StoriesViewer {
     this._visibleStoryIndex = this._stories.indexOf(storyView);
 
     this._stories[this._visibleStoryIndex].show();
-    
+
     this.updateViewportPosition();
   }
 
@@ -131,5 +180,10 @@ export class StoriesViewer {
       "style",
       `right: calc(-50% + ${offset}px);`
     );
+  }
+
+  private destroy(): void {
+    this._closeButton.removeEventListener("click", this.onCloseStoriesViewer);
+    this._stories.forEach((p) => p.destroy());
   }
 }

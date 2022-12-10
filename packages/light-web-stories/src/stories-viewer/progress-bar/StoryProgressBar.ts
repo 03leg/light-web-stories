@@ -46,7 +46,7 @@ export class StoryProgressBar {
 
   startTimer() {
     this.stopProgress();
-    
+
     this._timeoutHandler = setTimeout(() => {
       this._options.nextItem();
     }, 10000);
@@ -54,5 +54,9 @@ export class StoryProgressBar {
 
   stopProgress() {
     clearTimeout(this._timeoutHandler);
+  }
+
+  destroy() {
+    this.stopProgress();
   }
 }

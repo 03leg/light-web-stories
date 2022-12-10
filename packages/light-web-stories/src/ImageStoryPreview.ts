@@ -13,7 +13,7 @@ export class ImageStoryPreview {
   }
 
   constructor(
-    private _options: StoryOptions,
+    public readonly options: StoryOptions,
     private _onShowStorySlide: (storySlide: ImageStoryPreview) => void
   ) {
     this.onStorySlideClick = this.onStorySlideClick.bind(this);
@@ -35,7 +35,7 @@ export class ImageStoryPreview {
     storyImage.classList.add("story-image");
     storyImage.classList.add("no-user-select");
 
-    storyImage.setAttribute("src", this._options.slideImage);
+    storyImage.setAttribute("src", this.options.slideImage);
 
     storyButton.append(storyImage);
     storyCard.appendChild(storyButton);

@@ -55,10 +55,6 @@ export abstract class StoryViewHtmlHelper {
 
     result.classList.add("story-view__overlap");
 
-    result.addEventListener("click", () => {
-      console.log("overlap");
-    });
-
     return result;
   }
   public static getNavigationArea(

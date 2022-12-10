@@ -1,4 +1,5 @@
 import { Story } from "../model/Story";
+import { StoryOptions } from "../model/StoryOptions";
 import { NavigationAreaType } from "../model/view/NavigationArea";
 import { StoryViewOptions } from "../model/view/StoryViewOptions";
 import { StoryProgressBar } from "./progress-bar/StoryProgressBar";
@@ -32,6 +33,10 @@ export class StoryView {
 
   private get storyItemsCount(): number {
     return this._options.storyOptions.stories.length;
+  }
+
+  public get storyOptions(): StoryOptions {
+    return this._options.storyOptions;
   }
 
   constructor(private _options: StoryViewOptions) {
@@ -242,5 +247,6 @@ export class StoryView {
     );
 
     this._overlapElement.removeEventListener("click", this.changeStory);
+    this._storyProgressBar.destroy();
   }
 }
