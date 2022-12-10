@@ -72,6 +72,30 @@ export class App {
               image:
                 "https://habrastorage.org/r/w780/webt/ep/hm/83/ephm83ondrxnhk3iw4z86cfkiuy.jpeg",
             },
+            {
+              image:
+                "https://habrastorage.org/r/w390/webt/4c/p_/4l/4cp_4ltj1yhsykv_qkn8tlajc8o.jpeg",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ms/b5/40/msb5402d3egbeqwu0umgemq92we.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/lh/6w/ea/lh6weaiko17auns0n2vqltdqq5g.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/7y/9n/cd/7y9ncdqtnro5mfkl04xwij3odzc.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ep/hm/83/ephm83ondrxnhk3iw4z86cfkiuy.jpeg",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ep/hm/83/ephm83ondrxnhk3iw4z86cfkiuy.jpeg",
+            },
           ],
         },
         {

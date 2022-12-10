@@ -1,7 +1,7 @@
 import { Story } from "../model/Story";
-import { StoryOptions } from "../model/StoryOptions";
 import { NavigationAreaType } from "../model/view/NavigationArea";
 import { StoryViewOptions } from "../model/view/StoryViewOptions";
+import { StoryProgressBar } from "./progress-bar/StoryProgressBar";
 import { StoryViewHtmlHelper } from "./StoryViewHtmlHelper";
 
 export class StoryView {
@@ -21,6 +21,7 @@ export class StoryView {
     StoryViewHtmlHelper.getPrevImageButtonElement();
   private _showNextImageButtonElement =
     StoryViewHtmlHelper.getNextImageButtonElement();
+  private _storyProgressBar: StoryProgressBar;
 
   public get element(): HTMLDivElement {
     if (this._element === null) {
@@ -51,6 +52,13 @@ export class StoryView {
     );
 
     this._overlapElement.addEventListener("click", this.changeStory);
+
+    this._storyProgressBar = new StoryProgressBar({
+      countImages: this._options.storyOptions.stories.length,
+      nextItem: () => {
+        this.showNextImage();
+      },
+    });
   }
 
   private changeStory(): void {
@@ -60,6 +68,7 @@ export class StoryView {
   show() {
     this.showNavigationAreas();
     this.showNavigationImageButtons();
+    this.showStoryProgressBar();
 
     this._overlapElement.remove();
   }
@@ -67,8 +76,19 @@ export class StoryView {
   hide() {
     this.removeNavigationAreas();
     this.removeNavigationStoryButtons();
+    this.removeStoryProgressBar();
 
     this._storyContentElement.appendChild(this._overlapElement);
+  }
+
+  private showStoryProgressBar(): void {
+    this.element.appendChild(this._storyProgressBar.element);
+    this.updateProgressBar();
+  }
+
+  private removeStoryProgressBar(): void {
+    this._storyProgressBar.stopProgress();
+    this._storyProgressBar.element.remove();
   }
 
   protected showNavigationImageButtons(): void {
@@ -79,8 +99,6 @@ export class StoryView {
   }
 
   protected updateNavigationButtonsState(): void {
-    console.log("update");
-
     this._showPrevImageButtonElement.classList.remove(
       "story-view__navigate-story-button_disabled"
     );
@@ -147,6 +165,7 @@ export class StoryView {
     ).classList.remove("story-view__image_hidden");
 
     this.updateNavigationButtonsState();
+    this.updateProgressBar();
   }
 
   showPrevImage() {
@@ -167,6 +186,11 @@ export class StoryView {
     ).classList.remove("story-view__image_hidden");
 
     this.updateNavigationButtonsState();
+    this.updateProgressBar();
+  }
+
+  updateProgressBar() {
+    this._storyProgressBar.updateVisibleProgresBarItem(this._visibleImageIndex);
   }
 
   private createElement(): HTMLDivElement {
