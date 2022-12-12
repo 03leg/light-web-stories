@@ -8,9 +8,23 @@ import { MobileStoriesViewer } from "./stories-viewer/MobileStoriesViewer";
 export class LightWebStories {
   private _storiesViewer: StoriesViewer;
 
+  private get isMobile(): boolean {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+  }
+
   constructor(private _options: LightWebStoriesOptions) {
-    // this._storiesViewer = new MobileStoriesViewer(document.body, this._options);
-    this._storiesViewer = new StoriesViewer(document.body, this._options);
+    if (this.isMobile) {
+      this._storiesViewer = new MobileStoriesViewer(
+        document.body,
+        this._options
+      );
+      console.log("Mobile strategy");
+    } else {
+      this._storiesViewer = new StoriesViewer(document.body, this._options);
+      console.log("Desktop strategy");
+    }
   }
 
   public initialize(): void {

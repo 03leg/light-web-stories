@@ -8,7 +8,7 @@ export class StoriesViewer {
   private _closeButton!: HTMLDivElement;
   protected _stories!: StoryView[];
 
-  private _visibleStoryIndex: number = 0;
+  protected _visibleStoryIndex: number = 0;
 
   public constructor(
     private _container: HTMLElement,
@@ -20,7 +20,7 @@ export class StoriesViewer {
   private createElements(): void {
     this._stories = this.getStories();
 
-    const rootElements = StoriesViewer.createMainElements();
+    const rootElements = this.createMainElements();
 
     this._storiesContainerElement = rootElements.storiesContainerElement;
     this._storiesViewerElement = rootElements.storiesViewerElement;
@@ -39,7 +39,7 @@ export class StoriesViewer {
     });
   }
 
-  private static createMainElements(): {
+  private createMainElements(): {
     storiesViewerElement: HTMLDivElement;
     storiesContainerElement: HTMLDivElement;
     closeButton: HTMLDivElement;
@@ -53,7 +53,7 @@ export class StoriesViewer {
     const storiesContainerElement = document.createElement("div");
     storiesContainerElement.classList.add("stories-viewer__container");
 
-    const closeButton = StoriesViewer.createCloseButton();
+    const closeButton = this.createCloseButton();
 
     storiesViewerElement.appendChild(closeButton);
     storiesViewerElement.appendChild(backgroundElement);
@@ -62,7 +62,7 @@ export class StoriesViewer {
     return { storiesViewerElement, storiesContainerElement, closeButton };
   }
 
-  private static createCloseButton(): HTMLDivElement {
+  protected createCloseButton(): HTMLDivElement {
     const element = document.createElement("div");
     element.classList.add("stories-viewer__close-button");
 
@@ -142,10 +142,10 @@ export class StoriesViewer {
     this.updateViewportPosition();
   }
 
-  private showNextStory(): void {
+  protected showNextStory(): boolean {
     if (this._visibleStoryIndex + 1 >= this._stories.length) {
       console.warn("There are not new stories.");
-      return;
+      return false;
     }
 
     this._stories[this._visibleStoryIndex].hide();
@@ -155,12 +155,14 @@ export class StoriesViewer {
     this._stories[this._visibleStoryIndex].show();
 
     this.updateViewportPosition();
+
+    return true;
   }
 
-  private showPrevStory(): void {
+  protected showPrevStory(): boolean {
     if (this._visibleStoryIndex === 0) {
       console.warn("It's first story.");
-      return;
+      return false;
     }
 
     this._stories[this._visibleStoryIndex].hide();
@@ -170,6 +172,8 @@ export class StoriesViewer {
     this._stories[this._visibleStoryIndex].show();
 
     this.updateViewportPosition();
+
+    return true;
   }
 
   protected updateViewportPosition(): void {

@@ -85,9 +85,16 @@
     border-image: initial;
     padding: 0px;
     fill: #2c2c2c;
+    z-index: 2;
 }
 
-.stories-viewer__close-button:hover{
+.stories-viewer__close-button_mobile {
+    top: 22px;
+    right: 10px;
+    fill: #c2c2c2;
+}
+
+.stories-viewer__close-button:hover {
     fill: rgb(255, 255, 255);
 }
 
