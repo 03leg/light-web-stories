@@ -8,9 +8,9 @@ import { StoryViewHtmlHelper } from "./StoryViewHtmlHelper";
 export class StoryView {
   private _element: HTMLDivElement | null = null;
   private _mapImages = new Map<number, HTMLImageElement>();
-  private _prevAreaElement: HTMLDivElement =
+  protected _prevAreaElement: HTMLDivElement =
     StoryViewHtmlHelper.getNavigationArea(NavigationAreaType.Prev);
-  private _nextAreaElement: HTMLDivElement =
+  protected _nextAreaElement: HTMLDivElement =
     StoryViewHtmlHelper.getNavigationArea(NavigationAreaType.Next);
   private _visibleImageIndex = 0;
   private _overlapElement: HTMLDivElement =
@@ -39,14 +39,6 @@ export class StoryView {
     return this._options.storyOptions;
   }
 
-  private suspendProgress(): void {
-    this._storyProgressBar.suspend();
-  }
-
-  private resumeProgress(): void {
-    this._storyProgressBar.resume();
-  }
-
   constructor(private _options: StoryViewOptions) {
     this.showNextImage = this.showNextImage.bind(this);
     this.showPrevImage = this.showPrevImage.bind(this);
@@ -62,12 +54,6 @@ export class StoryView {
     this._nextAreaElement.addEventListener("mousedown", this.suspendProgress);
     this._prevAreaElement.addEventListener("mouseup", this.resumeProgress);
     this._nextAreaElement.addEventListener("mouseup", this.resumeProgress);
-
-    //mobile
-    this._prevAreaElement.addEventListener("touchstart", this.suspendProgress);
-    this._nextAreaElement.addEventListener("touchstart", this.suspendProgress);
-    this._prevAreaElement.addEventListener("touchend", this.resumeProgress);
-    this._nextAreaElement.addEventListener("touchend", this.resumeProgress);
 
     this._showNextImageButtonElement.addEventListener(
       "click",
@@ -86,6 +72,14 @@ export class StoryView {
         this.showNextImage();
       },
     });
+  }
+
+  protected suspendProgress(): void {
+    this._storyProgressBar.suspend();
+  }
+
+  protected resumeProgress(): void {
+    this._storyProgressBar.resume();
   }
 
   private changeStory(): void {
@@ -260,16 +254,16 @@ export class StoryView {
     this._nextAreaElement.removeEventListener("click", this.showNextImage);
 
     //desktop
-    this._prevAreaElement.removeEventListener("mousedown", this.suspendProgress);
-    this._nextAreaElement.removeEventListener("mousedown", this.suspendProgress);
+    this._prevAreaElement.removeEventListener(
+      "mousedown",
+      this.suspendProgress
+    );
+    this._nextAreaElement.removeEventListener(
+      "mousedown",
+      this.suspendProgress
+    );
     this._prevAreaElement.removeEventListener("mouseup", this.resumeProgress);
     this._nextAreaElement.removeEventListener("mouseup", this.resumeProgress);
-
-    //mobile
-    this._prevAreaElement.removeEventListener("touchstart", this.suspendProgress);
-    this._nextAreaElement.removeEventListener("touchstart", this.suspendProgress);
-    this._prevAreaElement.removeEventListener("touchend", this.resumeProgress);
-    this._nextAreaElement.removeEventListener("touchend", this.resumeProgress);
 
     this._showNextImageButtonElement.removeEventListener(
       "click",

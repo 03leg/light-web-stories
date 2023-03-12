@@ -1,6 +1,7 @@
 import { LightWebStoriesOptions } from "../model/LightWebStoriesOptions";
 import { ImageStoryPreview } from "../ImageStoryPreview";
 import { StoryView } from "./StoryView";
+import { StoryOptions } from "../model/StoryOptions";
 
 export class StoriesViewer {
   protected _storiesContainerElement!: HTMLDivElement;
@@ -12,7 +13,7 @@ export class StoriesViewer {
 
   public constructor(
     private _container: HTMLElement,
-    private _generalOptions: LightWebStoriesOptions
+    protected _generalOptions: LightWebStoriesOptions
   ) {
     this.onCloseStoriesViewer = this.onCloseStoriesViewer.bind(this);
   }
@@ -117,14 +118,7 @@ export class StoriesViewer {
     let index = 0;
 
     for (const storyOptions of this._generalOptions.items) {
-      const instance = new StoryView({
-        onNextStory: this.showNextStory.bind(this),
-        onPrevStory: this.showPrevStory.bind(this),
-        storyOptions: storyOptions,
-        isFirstStory: index === 0,
-        isLastStory: index + 1 === this._generalOptions.items.length,
-        onChangeStory: this.changeStory.bind(this),
-      });
+      const instance = this.getStoryView(storyOptions, index);
       result.push(instance);
       index++;
     }
@@ -132,7 +126,18 @@ export class StoriesViewer {
     return result;
   }
 
-  private changeStory(storyView: StoryView): void {
+  protected getStoryView(storyOptions: StoryOptions, index: number): StoryView {
+    return new StoryView({
+      onNextStory: this.showNextStory.bind(this),
+      onPrevStory: this.showPrevStory.bind(this),
+      storyOptions: storyOptions,
+      isFirstStory: index === 0,
+      isLastStory: index + 1 === this._generalOptions.items.length,
+      onChangeStory: this.changeStory.bind(this),
+    });
+  }
+
+  protected changeStory(storyView: StoryView): void {
     this._stories[this._visibleStoryIndex].hide();
 
     this._visibleStoryIndex = this._stories.indexOf(storyView);

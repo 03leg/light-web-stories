@@ -1,6 +1,9 @@
 import { StoriesViewer } from "./StoriesViewer";
 import { Swiper, Navigation } from "swiper";
 import { ImageStoryPreview } from "../ImageStoryPreview";
+import { StoryOptions } from "../model/StoryOptions";
+import { StoryView } from "./StoryView";
+import { MobileStoryView } from "./MobileStoryView";
 
 export class MobileStoriesViewer extends StoriesViewer {
   private _swiperInstance!: Swiper;
@@ -72,5 +75,16 @@ export class MobileStoriesViewer extends StoriesViewer {
     btn.classList.add("stories-viewer__close-button_mobile");
 
     return btn;
+  }
+
+  protected getStoryView(storyOptions: StoryOptions, index: number): StoryView {
+    return new MobileStoryView({
+      onNextStory: this.showNextStory.bind(this),
+      onPrevStory: this.showPrevStory.bind(this),
+      storyOptions: storyOptions,
+      isFirstStory: index === 0,
+      isLastStory: index + 1 === this._generalOptions.items.length,
+      onChangeStory: this.changeStory.bind(this),
+    });
   }
 }
