@@ -95,6 +95,8 @@
     top: 22px;
     right: 10px;
     fill: #c2c2c2;
+    width: 24px;
+    height: 24px;
 }
 
 .stories-viewer__close-button:hover {
@@ -165,8 +167,11 @@
     cursor: pointer;
 }
 
-.story-view__navigation-area:hover {
-    background: linear-gradient(90deg, transparent 33.33%, #000);
+@media (min-width: 769px) 
+{
+    .story-view__navigation-area:hover {
+        background: linear-gradient(90deg, transparent 33.33%, #000);
+    }
 }
 
 .story-view__navigation-area_prev {
