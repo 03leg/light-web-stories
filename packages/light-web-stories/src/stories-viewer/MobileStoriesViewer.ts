@@ -41,10 +41,7 @@ export class MobileStoriesViewer extends StoriesViewer {
   }
 
   protected showPrevStory(): boolean {
-    console.log("show prev 1");
     if (super.showPrevStory()) {
-      console.log("show prev 2");
-
       this._swiperInstance.slidePrev();
       return true;
     }

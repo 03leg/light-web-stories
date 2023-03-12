@@ -18,6 +18,7 @@ export default {
         {
           src: [
             "../../packages/light-web-stories/src/light-web-stories.css",
+           // "../../packages/light-web-stories/lib/long-press-event.min.js",
             "../../node_modules/swiper/swiper-bundle.min.css",
           ],
           dest: "dist/",

@@ -1,4 +1,5 @@
 import { StoryProgressBarOptions } from "../../model/view/StoryProgressBarOptions";
+import { Timer } from "../../Timer";
 import { StoryProgressBarHtmlHelper } from "./StoryProgressBarHtmlHelper";
 import { StoryProgressItem } from "./StoryProgressItem";
 
@@ -6,7 +7,7 @@ export class StoryProgressBar {
   private _element: HTMLDivElement | null = null;
   private _progressItems = new Array<StoryProgressItem>();
   private _activeStoryItem: StoryProgressItem | null = null;
-  private _timeoutHandler?: ReturnType<typeof setTimeout>;
+  private _timer: Timer | null = null;
 
   get element(): HTMLDivElement {
     if (this._element === null) {
@@ -47,16 +48,26 @@ export class StoryProgressBar {
   startTimer() {
     this.stopProgress();
 
-    this._timeoutHandler = setTimeout(() => {
+    this._timer = new Timer(() => {
       this._options.nextItem();
     }, 10000);
   }
 
   stopProgress() {
-    clearTimeout(this._timeoutHandler);
+    this._timer?.destroy();
   }
 
   destroy() {
     this.stopProgress();
+  }
+
+  suspend() {
+    this._activeStoryItem!.suspend();
+    this._timer?.pause();
+  }
+
+  resume() {
+    this._activeStoryItem!.resume();
+    this._timer?.resume();
   }
 }

@@ -63,6 +63,8 @@ export abstract class StoryViewHtmlHelper {
     const result = document.createElement("div");
     result.classList.add("story-view__navigation-area");
 
+    // result.setAttribute("data-long-press-delay", "500");
+
     switch (navigationArea) {
       case NavigationAreaType.Prev: {
         result.classList.add("story-view__navigation-area_prev");

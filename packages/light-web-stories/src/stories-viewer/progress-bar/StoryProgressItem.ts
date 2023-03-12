@@ -21,6 +21,10 @@ export class StoryProgressItem {
 
   start() {
     this._progressViewer!.classList.remove(
+      "story-progress-bar__progress-viewer_paused"
+    );
+
+    this._progressViewer!.classList.remove(
       "story-progress-bar__progress-viewer_new"
     );
 
@@ -43,6 +47,18 @@ export class StoryProgressItem {
     this._progressViewer!.setAttribute(
       "class",
       "story-progress-bar__progress-viewer story-progress-bar__progress-viewer_new"
+    );
+  }
+
+  suspend() {
+    this._progressViewer!.classList.add(
+      "story-progress-bar__progress-viewer_paused"
+    );
+  }
+
+  resume() {
+    this._progressViewer!.classList.remove(
+      "story-progress-bar__progress-viewer_paused"
     );
   }
 
