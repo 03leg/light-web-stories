@@ -1,9 +1,14 @@
-import { LightWebStoriesOptions } from "./model/LightWebStoriesOptions";
+import {
+  LightWebStoriesOptions,
+  PreviewMode,
+} from "./model/LightWebStoriesOptions";
 import { StoryOptions } from "./model/StoryOptions";
 import { Swiper, Navigation } from "swiper";
 import { ImageStoryPreview } from "./ImageStoryPreview";
 import { StoriesViewer } from "./stories-viewer/StoriesViewer";
 import { MobileStoriesViewer } from "./stories-viewer/MobileStoriesViewer";
+import { InstagramStoryPreview } from "./InstagramStoryPreview";
+import { StoryPreview } from "./model/StoryPreview";
 
 export class LightWebStories {
   private _storiesViewer: StoriesViewer;
@@ -12,6 +17,17 @@ export class LightWebStories {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
     );
+  }
+
+  private static _staticInited = false;
+  public static staticInit() {
+    if (this._staticInited) {
+      return;
+    }
+
+    Swiper.use([Navigation]);
+
+    this._staticInited = true;
   }
 
   constructor(private _options: LightWebStoriesOptions) {
@@ -28,30 +44,35 @@ export class LightWebStories {
   }
 
   public initialize(): void {
+    LightWebStories.staticInit();
+    
     const container = this._options.container;
 
-    const swiperContainer = this.getBaseLayout(this.getStorySlideElements());
-    this.addNavigationButtons(swiperContainer);
+    const swiperContainer = LightWebStories.getBaseLayout(
+      this._options.previewMode,
+      this.getStorySlideElements()
+    );
+
+    if (this._options.showPreviewNavButtons) {
+      this.addNavigationButtons(swiperContainer);
+    }
 
     container.append(swiperContainer);
 
-    Swiper.use([Navigation]);
-
     const swiperInstance = new Swiper(swiperContainer, {
-      slidesPerView: 5,
-      spaceBetween: 20,
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
+      slidesPerView: this._options.slidesPerView,
+      loop: false,
+      spaceBetween: 10,
+      navigation: this._options.showPreviewNavButtons
+        ? {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          }
+        : undefined,
     });
   }
 
   addNavigationButtons(swiperContainer: HTMLDivElement): void {
-    // const newDiv0 = document.createElement("div");
-    // newDiv0.classList.add("swiper-pagination");
-    // swiperContainer.appendChild(newDiv0);
-
     const prevButton = document.createElement("div");
     prevButton.classList.add("swiper-button-prev");
     prevButton.classList.add("navigation-button");
@@ -82,9 +103,26 @@ export class LightWebStories {
     nextButton.appendChild(svgNext);
   }
 
-  getBaseLayout(cards: Array<HTMLDivElement>): HTMLDivElement {
+  static getBaseLayout(
+    previewMode: PreviewMode,
+    cards: Array<HTMLDivElement>
+  ): HTMLDivElement {
     const container1 = document.createElement("div");
     container1.classList.add("swiper");
+
+    switch (previewMode) {
+      case PreviewMode.Image: {
+        container1.classList.add("image-preview");
+        break;
+      }
+      case PreviewMode.InstagramStory: {
+        container1.classList.add("instagram-preview");
+        break;
+      }
+      default: {
+        throw new Error("NotImplemented");
+      }
+    }
 
     const childContainer = document.createElement("div");
     childContainer.classList.add("swiper-wrapper");
@@ -103,17 +141,29 @@ export class LightWebStories {
     const result = [];
 
     for (const item of this._options.items) {
-      const storySlideInstance = new ImageStoryPreview(
-        item,
-        this.onShowStorySlide.bind(this)
-      );
-      result.push(storySlideInstance.element);
+      let storySlideInstance: StoryPreview;
+
+      if (this._options.previewMode === PreviewMode.Image) {
+        storySlideInstance = new ImageStoryPreview(
+          item,
+          this.onShowStorySlide.bind(this)
+        );
+      }
+
+      if (this._options.previewMode === PreviewMode.InstagramStory) {
+        storySlideInstance = new InstagramStoryPreview(
+          item,
+          this.onShowStorySlide.bind(this)
+        );
+      }
+
+      result.push(storySlideInstance!.element);
     }
 
     return result;
   }
 
-  private onShowStorySlide(storySlide: ImageStoryPreview): void {
+  private onShowStorySlide(storySlide: StoryPreview): void {
     this._storiesViewer.show(storySlide);
   }
 }

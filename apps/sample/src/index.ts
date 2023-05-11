@@ -1,3 +1,4 @@
+import { PreviewMode } from "light-web-stories";
 import { LightWebStories, LightWebStoriesOptions } from "light-web-stories";
 
 // [
@@ -45,8 +46,11 @@ import { LightWebStories, LightWebStoriesOptions } from "light-web-stories";
 
 export class App {
   public setup(): void {
-    const options: LightWebStoriesOptions = {
-      container: document.querySelector("#stories")!,
+    const options1: LightWebStoriesOptions = {
+      container: document.querySelector("#stories-1")!,
+      previewMode: PreviewMode.Image,
+      showPreviewNavButtons: true,
+      slidesPerView: 5,
       items: [
         {
           slideImage:
@@ -360,8 +364,403 @@ export class App {
         },
       ],
     };
-    const storiesSdk = new LightWebStories(options);
-    storiesSdk.initialize();
+    const storiesSdk1 = new LightWebStories(options1);
+    storiesSdk1.initialize();
+
+    const options2: LightWebStoriesOptions = {
+      container: document.querySelector("#stories-2")!,
+      previewMode: PreviewMode.InstagramStory,
+      showPreviewNavButtons: false,
+      slidesPerView: "auto",
+      items: [
+        {
+          slideImage:
+            "https://stories-slider.uiinitiative.com/avatars/mark.jpg",
+          stories: [
+            {
+              image:
+                "https://habrastorage.org/r/w390/webt/4c/p_/4l/4cp_4ltj1yhsykv_qkn8tlajc8o.jpeg",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ms/b5/40/msb5402d3egbeqwu0umgemq92we.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/lh/6w/ea/lh6weaiko17auns0n2vqltdqq5g.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/7y/9n/cd/7y9ncdqtnro5mfkl04xwij3odzc.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ep/hm/83/ephm83ondrxnhk3iw4z86cfkiuy.jpeg",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w390/webt/4c/p_/4l/4cp_4ltj1yhsykv_qkn8tlajc8o.jpeg",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ms/b5/40/msb5402d3egbeqwu0umgemq92we.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/lh/6w/ea/lh6weaiko17auns0n2vqltdqq5g.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/7y/9n/cd/7y9ncdqtnro5mfkl04xwij3odzc.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ep/hm/83/ephm83ondrxnhk3iw4z86cfkiuy.jpeg",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ep/hm/83/ephm83ondrxnhk3iw4z86cfkiuy.jpeg",
+            },
+          ],
+        },
+        {
+          slideImage:
+            "https://stories-slider.uiinitiative.com/avatars/malenia.jpg",
+          stories: [
+            {
+              image:
+                "https://habrastorage.org/r/w390/webt/4c/p_/4l/4cp_4ltj1yhsykv_qkn8tlajc8o.jpeg",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ms/b5/40/msb5402d3egbeqwu0umgemq92we.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/lh/6w/ea/lh6weaiko17auns0n2vqltdqq5g.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/7y/9n/cd/7y9ncdqtnro5mfkl04xwij3odzc.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ep/hm/83/ephm83ondrxnhk3iw4z86cfkiuy.jpeg",
+            },
+          ],
+        },
+        {
+          slideImage:
+            "https://stories-slider.uiinitiative.com/avatars/john.jpg",
+          stories: [
+            {
+              image:
+                "https://habrastorage.org/r/w390/webt/4c/p_/4l/4cp_4ltj1yhsykv_qkn8tlajc8o.jpeg",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ms/b5/40/msb5402d3egbeqwu0umgemq92we.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/lh/6w/ea/lh6weaiko17auns0n2vqltdqq5g.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/7y/9n/cd/7y9ncdqtnro5mfkl04xwij3odzc.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ep/hm/83/ephm83ondrxnhk3iw4z86cfkiuy.jpeg",
+            },
+          ],
+        },
+        {
+          slideImage:
+            "https://stories-slider.uiinitiative.com/avatars/mark.jpg",
+          stories: [
+            {
+              image:
+                "https://habrastorage.org/r/w390/webt/4c/p_/4l/4cp_4ltj1yhsykv_qkn8tlajc8o.jpeg",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ms/b5/40/msb5402d3egbeqwu0umgemq92we.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/lh/6w/ea/lh6weaiko17auns0n2vqltdqq5g.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/7y/9n/cd/7y9ncdqtnro5mfkl04xwij3odzc.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ep/hm/83/ephm83ondrxnhk3iw4z86cfkiuy.jpeg",
+            },
+          ],
+        },
+        {
+          slideImage:
+            "https://stories-slider.uiinitiative.com/avatars/mark.jpg",
+          stories: [
+            {
+              image:
+                "https://habrastorage.org/r/w390/webt/4c/p_/4l/4cp_4ltj1yhsykv_qkn8tlajc8o.jpeg",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ms/b5/40/msb5402d3egbeqwu0umgemq92we.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/lh/6w/ea/lh6weaiko17auns0n2vqltdqq5g.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/7y/9n/cd/7y9ncdqtnro5mfkl04xwij3odzc.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ep/hm/83/ephm83ondrxnhk3iw4z86cfkiuy.jpeg",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w390/webt/4c/p_/4l/4cp_4ltj1yhsykv_qkn8tlajc8o.jpeg",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ms/b5/40/msb5402d3egbeqwu0umgemq92we.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/lh/6w/ea/lh6weaiko17auns0n2vqltdqq5g.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/7y/9n/cd/7y9ncdqtnro5mfkl04xwij3odzc.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ep/hm/83/ephm83ondrxnhk3iw4z86cfkiuy.jpeg",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ep/hm/83/ephm83ondrxnhk3iw4z86cfkiuy.jpeg",
+            },
+          ],
+        },
+        {
+          slideImage:
+            "https://stories-slider.uiinitiative.com/avatars/malenia.jpg",
+          stories: [
+            {
+              image:
+                "https://habrastorage.org/r/w390/webt/4c/p_/4l/4cp_4ltj1yhsykv_qkn8tlajc8o.jpeg",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ms/b5/40/msb5402d3egbeqwu0umgemq92we.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/lh/6w/ea/lh6weaiko17auns0n2vqltdqq5g.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/7y/9n/cd/7y9ncdqtnro5mfkl04xwij3odzc.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ep/hm/83/ephm83ondrxnhk3iw4z86cfkiuy.jpeg",
+            },
+          ],
+        },
+        {
+          slideImage:
+            "https://stories-slider.uiinitiative.com/avatars/john.jpg",
+          stories: [
+            {
+              image:
+                "https://habrastorage.org/r/w390/webt/4c/p_/4l/4cp_4ltj1yhsykv_qkn8tlajc8o.jpeg",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ms/b5/40/msb5402d3egbeqwu0umgemq92we.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/lh/6w/ea/lh6weaiko17auns0n2vqltdqq5g.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/7y/9n/cd/7y9ncdqtnro5mfkl04xwij3odzc.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ep/hm/83/ephm83ondrxnhk3iw4z86cfkiuy.jpeg",
+            },
+          ],
+        },
+        {
+          slideImage:
+            "https://stories-slider.uiinitiative.com/avatars/mark.jpg",
+          stories: [
+            {
+              image:
+                "https://habrastorage.org/r/w390/webt/4c/p_/4l/4cp_4ltj1yhsykv_qkn8tlajc8o.jpeg",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ms/b5/40/msb5402d3egbeqwu0umgemq92we.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/lh/6w/ea/lh6weaiko17auns0n2vqltdqq5g.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/7y/9n/cd/7y9ncdqtnro5mfkl04xwij3odzc.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ep/hm/83/ephm83ondrxnhk3iw4z86cfkiuy.jpeg",
+            },
+          ],
+        },
+        {
+          slideImage:
+            "https://stories-slider.uiinitiative.com/avatars/mark.jpg",
+          stories: [
+            {
+              image:
+                "https://habrastorage.org/r/w390/webt/4c/p_/4l/4cp_4ltj1yhsykv_qkn8tlajc8o.jpeg",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ms/b5/40/msb5402d3egbeqwu0umgemq92we.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/lh/6w/ea/lh6weaiko17auns0n2vqltdqq5g.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/7y/9n/cd/7y9ncdqtnro5mfkl04xwij3odzc.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ep/hm/83/ephm83ondrxnhk3iw4z86cfkiuy.jpeg",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w390/webt/4c/p_/4l/4cp_4ltj1yhsykv_qkn8tlajc8o.jpeg",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ms/b5/40/msb5402d3egbeqwu0umgemq92we.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/lh/6w/ea/lh6weaiko17auns0n2vqltdqq5g.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/7y/9n/cd/7y9ncdqtnro5mfkl04xwij3odzc.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ep/hm/83/ephm83ondrxnhk3iw4z86cfkiuy.jpeg",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ep/hm/83/ephm83ondrxnhk3iw4z86cfkiuy.jpeg",
+            },
+          ],
+        },
+        {
+          slideImage:
+            "https://stories-slider.uiinitiative.com/avatars/malenia.jpg",
+          stories: [
+            {
+              image:
+                "https://habrastorage.org/r/w390/webt/4c/p_/4l/4cp_4ltj1yhsykv_qkn8tlajc8o.jpeg",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ms/b5/40/msb5402d3egbeqwu0umgemq92we.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/lh/6w/ea/lh6weaiko17auns0n2vqltdqq5g.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/7y/9n/cd/7y9ncdqtnro5mfkl04xwij3odzc.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ep/hm/83/ephm83ondrxnhk3iw4z86cfkiuy.jpeg",
+            },
+          ],
+        },
+        {
+          slideImage:
+            "https://stories-slider.uiinitiative.com/avatars/john.jpg",
+          stories: [
+            {
+              image:
+                "https://habrastorage.org/r/w390/webt/4c/p_/4l/4cp_4ltj1yhsykv_qkn8tlajc8o.jpeg",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ms/b5/40/msb5402d3egbeqwu0umgemq92we.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/lh/6w/ea/lh6weaiko17auns0n2vqltdqq5g.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/7y/9n/cd/7y9ncdqtnro5mfkl04xwij3odzc.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ep/hm/83/ephm83ondrxnhk3iw4z86cfkiuy.jpeg",
+            },
+          ],
+        },
+        {
+          slideImage:
+            "https://stories-slider.uiinitiative.com/avatars/mark.jpg",
+          stories: [
+            {
+              image:
+                "https://habrastorage.org/r/w390/webt/4c/p_/4l/4cp_4ltj1yhsykv_qkn8tlajc8o.jpeg",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ms/b5/40/msb5402d3egbeqwu0umgemq92we.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/lh/6w/ea/lh6weaiko17auns0n2vqltdqq5g.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/7y/9n/cd/7y9ncdqtnro5mfkl04xwij3odzc.png",
+            },
+            {
+              image:
+                "https://habrastorage.org/r/w780/webt/ep/hm/83/ephm83ondrxnhk3iw4z86cfkiuy.jpeg",
+            },
+          ],
+        },
+      ],
+    };
+    const storiesSdk2 = new LightWebStories(options2);
+    storiesSdk2.initialize();
   }
 }
 

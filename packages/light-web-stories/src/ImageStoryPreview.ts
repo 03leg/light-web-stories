@@ -1,6 +1,7 @@
 import { StoryOptions } from "./model/StoryOptions";
+import { StoryPreview } from "./model/StoryPreview";
 
-export class ImageStoryPreview {
+export class ImageStoryPreview implements StoryPreview {
   private _element: HTMLDivElement | null = null;
   private _storyButton: HTMLButtonElement | null = null;
 

@@ -2,6 +2,7 @@ import { LightWebStoriesOptions } from "../model/LightWebStoriesOptions";
 import { ImageStoryPreview } from "../ImageStoryPreview";
 import { StoryView } from "./StoryView";
 import { StoryOptions } from "../model/StoryOptions";
+import { StoryPreview } from "../model/StoryPreview";
 
 export class StoriesViewer {
   protected _storiesContainerElement!: HTMLDivElement;
@@ -82,7 +83,7 @@ export class StoriesViewer {
     return element;
   }
 
-  private setVisibleStoryIndex(storySlide: ImageStoryPreview): void {
+  private setVisibleStoryIndex(storySlide: StoryPreview): void {
     const userStory = this._stories.find(
       (p) => p.storyOptions === storySlide.options
     );
@@ -94,7 +95,7 @@ export class StoriesViewer {
     this._visibleStoryIndex = this._stories.indexOf(userStory);
   }
 
-  public show(storySlide: ImageStoryPreview) {
+  public show(storySlide: StoryPreview) {
     this.createElements();
 
     this.addStoryElements();
