@@ -5822,9 +5822,10 @@
       "assets/preview4.png",
   ];
   var instaPreviews = [
-      "https://stories-slider.uiinitiative.com/avatars/mark.jpg",
-      "https://stories-slider.uiinitiative.com/avatars/malenia.jpg",
-      "https://stories-slider.uiinitiative.com/avatars/john.jpg",
+      "assets/instapreview1.PNG",
+      "assets/instapreview2.PNG",
+      "assets/instapreview3.PNG",
+      "assets/instapreview4.PNG",
   ];
   var contents = [
       "assets/story1.png",
